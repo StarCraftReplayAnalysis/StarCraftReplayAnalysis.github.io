@@ -14565,8 +14565,9 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Background">Background<a class="anchor-link" href="#Background">&#182;</a></h3><p>In this final project, data on SC2 replays is analyzed. SC2 is a PVP RTS that pits players against each other. The matches between players are based on MMR, which sorts players into various leagues (from Bronze 1 to GM). This project seeks to gain insight into the players' attributes and hopes to predict a player's league based on the game data.</p>
-<h3 id="Feature-Cleaning">Feature Cleaning<a class="anchor-link" href="#Feature-Cleaning">&#182;</a></h3><p>Pull the data into a df and take a rough look at the data. Most of the features seem to follow some very clean distributions.</p>
+<h1 id="StarCraft-II-Replay-Analysis">StarCraft II Replay Analysis<a class="anchor-link" href="#StarCraft-II-Replay-Analysis">&#182;</a></h1><p>This project is a tutorial into basic data analysis using a StarCraft II replay dataset. We shall use a few of the most common tools to investigate the dataset such as PCA, k-mean clustering, and of course, linear regression to find information about the data and create a model to predict the league (skill) of a match. Let's begin.</p>
+<h2 id="Background">Background<a class="anchor-link" href="#Background">&#182;</a></h2><p>In this project, data on SC2 replays is analyzed. SC2 is a PVP RTS that pits players against each other. The matches between players are based on MMR, which sorts players into various leagues (from Bronze 1 to GM). This project seeks to gain insight into the players' attributes and hopes to predict a player's league based on the game data.</p>
+<h2 id="First-Look">First Look<a class="anchor-link" href="#First-Look">&#182;</a></h2><p>Pull the data from a csv(comma separated values) into a Pandas Dataframe and take a rough look at the data. Most of the features seem to follow some very clean distributions.</p>
 
 </div>
 </div>
@@ -14604,7 +14605,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 
-  <div id="df-0cba127c-83a1-46a3-81ce-988020b02bcc">
+  <div id="df-f6b6a790-856b-4acd-88b6-cd2e3ea213ed">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -14772,7 +14773,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </table>
 <p>5 rows × 21 columns</p>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-0cba127c-83a1-46a3-81ce-988020b02bcc')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-f6b6a790-856b-4acd-88b6-cd2e3ea213ed')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
         
@@ -14823,12 +14824,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
       <script>
         const buttonEl =
-          document.querySelector('#df-0cba127c-83a1-46a3-81ce-988020b02bcc button.colab-df-convert');
+          document.querySelector('#df-f6b6a790-856b-4acd-88b6-cd2e3ea213ed button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-0cba127c-83a1-46a3-81ce-988020b02bcc');
+          const element = document.querySelector('#df-f6b6a790-856b-4acd-88b6-cd2e3ea213ed');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -14856,6 +14857,14 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="First-Look-(Cont.)">First Look (Cont.)<a class="anchor-link" href="#First-Look-(Cont.)">&#182;</a></h4><p>We shall make a few graphs first to get a rough idea of how the data is distributed. Shown below is the minimalist code to generate some histograms for rough inspection (of course, we will be looking at this ourselves, do NOT show this to your boss on a presentation without polishing it first)</p>
+
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -15193,7 +15202,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Judging from personal experience of the game, many of the aforementioned features are correlated with each other (for example, the assigning and using of hetkeys etc). Therefore, it would be prudent to check if these entries are really correlated. If so, PCA would be best to extract the most important information from the dataset.</p>
+<h3 id="Outside-Expertise">Outside Expertise<a class="anchor-link" href="#Outside-Expertise">&#182;</a></h3><p>Judging from personal experience of the game, many of the aforementioned features are correlated with each other (for example, the assigning and using of hetkeys etc). Therefore, it would be prudent to check if these entries are really correlated. If so, PCA would be best to extract the most important information from the dataset. <br>
+Even if you do not have previous knowledge of the data, PCA and correlation are always a nice option of feature engineering. <br></p>
+<h2 id="Feature-Engineering">Feature Engineering<a class="anchor-link" href="#Feature-Engineering">&#182;</a></h2><h4 id="Brief-aside-of-PCA">Brief aside of PCA<a class="anchor-link" href="#Brief-aside-of-PCA">&#182;</a></h4><p>PCA takes the original data and does a linear transformation (think stretching, reflecting and rotating) and turns it into a bunch of orthogonal components that explain the variance (basically eliminates most of the colinearity that would cause some problems with some algorithms down the road).
+Let's take a look at the correlation between the columns using .corr()</p>
 
 </div>
 </div>
@@ -15229,7 +15241,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 
-  <div id="df-47228913-bb08-48a4-b61e-fd48f562e0e6">
+  <div id="df-3e18e08c-d0f4-44d2-a4a0-66a5a027a696">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -15735,7 +15747,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   </tbody>
 </table>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-47228913-bb08-48a4-b61e-fd48f562e0e6')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-3e18e08c-d0f4-44d2-a4a0-66a5a027a696')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
         
@@ -15786,12 +15798,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
       <script>
         const buttonEl =
-          document.querySelector('#df-47228913-bb08-48a4-b61e-fd48f562e0e6 button.colab-df-convert');
+          document.querySelector('#df-3e18e08c-d0f4-44d2-a4a0-66a5a027a696 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-47228913-bb08-48a4-b61e-fd48f562e0e6');
+          const element = document.querySelector('#df-3e18e08c-d0f4-44d2-a4a0-66a5a027a696');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -15823,7 +15835,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="PCA">PCA<a class="anchor-link" href="#PCA">&#182;</a></h4><p>There is a strong correlation between APM, LeagueIndex and between hotkey selection and APM. PCA is needed. After normalizing the dataframe and computing PCA, such that 95% of the variance is explained, 15 components are obtained</p>
+<h4 id="PCA">PCA<a class="anchor-link" href="#PCA">&#182;</a></h4><p>There is a strong correlation between APM, LeagueIndex and between hotkey selection and APM. PCA is needed. After normalizing the dataframe (divide each column by the max of the column) and computing PCA, such that 95% of the variance is explained, 15 components are obtained <br>
+Here the sklearn library is used. Sklearn is a very versatile machine learning library, you will see more of it later. But for now, just know that if you want to do anything remotely related to machine learning, chances are, they have an algorithm for it, so try Googling it.</p>
 
 </div>
 </div>
@@ -15838,7 +15851,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class=" highlight hl-python"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">dfy</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;LeagueIndex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="c1"># Normalize the dataframe, so that the pxa does not give too skewed results</span>
+<span class="c1"># Normalize the dataframe, so that the pca does not give too skewed results</span>
 <span class="n">dfn</span><span class="o">=</span><span class="n">df</span><span class="o">/</span><span class="n">df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
 <span class="n">dfx</span><span class="o">=</span><span class="n">dfn</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;LeagueIndex&#39;</span><span class="p">])</span>
@@ -15880,39 +15893,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-python"><pre><span></span><span class="n">pcadf</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pcaMod</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">dfn</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;LeagueIndex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<span class="n">pcadf</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">pcaMod</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dfx</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Using the above PCA, one can label a few of the major components.</p>
-<h4 id="First-Principal-Component">First Principal Component<a class="anchor-link" href="#First-Principal-Component">&#182;</a></h4><p>The first principal component has the defining feature of high correlation between APM, Hotkey usage (Assign to Hotkeys and Select Hotkeys), Number of PAC (Perception Action Cycle, ie seeing something and reacting to it) and a strong negative correlation with Action Latency and Gap Between PAC.
-This supports the fact that the usage of hotkeys would make unit micromanagement easier and faster. Priliminary label of this component as unit micromanagement.</p>
-<h4 id="Second-Principal-Component">Second Principal Component<a class="anchor-link" href="#Second-Principal-Component">&#182;</a></h4><p>The most defining features of the second principal component is its correlation of Max Time Stamp (Game Length), ComplexUnitsMade (units that require long time/tech to produce and use) and negative correlation to Unique Units Made, Unique Hotkeys and Map Explored. This is known as "turtling" in the game (remain defensive and create a huge army of high tech units before finally bee-lining to opponent's base)</p>
-<h4 id="Third-Principal-Component">Third Principal Component<a class="anchor-link" href="#Third-Principal-Component">&#182;</a></h4><p>This corresponds to the affinity to spellcasting (usually relatively high tech) units vs normal units</p>
-<h4 id="Forth-Principal-Component">Forth Principal Component<a class="anchor-link" href="#Forth-Principal-Component">&#182;</a></h4><p>Corresponds roughly to aggressiveness: correlation of APM, Select by Hotkeys, Negative correlations of Unique Units Made, Workers Made and Map Explored (could be a timing attack?)</p>
-<h3 id="K-mean">K-mean<a class="anchor-link" href="#K-mean">&#182;</a></h3><p>Playstyles tend to form clusters due to their similarity, K means is employed to find these clusters. The elbow method used to determine that 5 clusters would best suit the dataset. Although the "elbow" is not very pronounced.</p>
-
-</div>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -15921,13 +15901,10 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="n">loss</span><span class="o">=</span><span class="p">[]</span>
-<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
-  <span class="n">km</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dfx</span><span class="p">)</span>
-  <span class="n">loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">pcadf</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pcaMod</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">dfn</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;LeagueIndex&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">pcaMod</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dfx</span><span class="p">)</span>
+<span class="n">pcadf</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -15949,30 +15926,282 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 
 
 
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
 
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>[&lt;matplotlib.lines.Line2D at 0x7f3bf35015d0&gt;]</pre>
+  <div id="df-af647230-fbee-4da6-a051-36aef40f44c1">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>HoursPerWeek</th>
+      <th>TotalHours</th>
+      <th>APM</th>
+      <th>SelectByHotkeys</th>
+      <th>AssignToHotkeys</th>
+      <th>UniqueHotkeys</th>
+      <th>MinimapAttacks</th>
+      <th>MinimapRightClicks</th>
+      <th>NumberOfPACs</th>
+      <th>GapBetweenPACs</th>
+      <th>ActionLatency</th>
+      <th>ActionsInPAC</th>
+      <th>TotalMapExplored</th>
+      <th>WorkersMade</th>
+      <th>UniqueUnitsMade</th>
+      <th>ComplexUnitsMade</th>
+      <th>ComplexAbilityUsed</th>
+      <th>MaxTimeStamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.103775</td>
+      <td>0.079490</td>
+      <td>0.004445</td>
+      <td>0.480733</td>
+      <td>0.325685</td>
+      <td>0.380937</td>
+      <td>0.189048</td>
+      <td>0.051682</td>
+      <td>0.133260</td>
+      <td>0.387854</td>
+      <td>-0.192887</td>
+      <td>-0.378823</td>
+      <td>0.084783</td>
+      <td>0.168620</td>
+      <td>0.197407</td>
+      <td>0.114044</td>
+      <td>0.135456</td>
+      <td>0.082980</td>
+      <td>-0.021511</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.028598</td>
+      <td>0.013508</td>
+      <td>-0.000256</td>
+      <td>0.021534</td>
+      <td>-0.051005</td>
+      <td>0.036573</td>
+      <td>-0.362265</td>
+      <td>0.022869</td>
+      <td>0.005011</td>
+      <td>0.224818</td>
+      <td>-0.016669</td>
+      <td>-0.122049</td>
+      <td>-0.104130</td>
+      <td>-0.351208</td>
+      <td>-0.064337</td>
+      <td>-0.542089</td>
+      <td>0.377196</td>
+      <td>0.225064</td>
+      <td>0.414699</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000123</td>
+      <td>-0.018401</td>
+      <td>-0.004506</td>
+      <td>-0.101823</td>
+      <td>-0.159509</td>
+      <td>-0.081421</td>
+      <td>-0.006874</td>
+      <td>-0.008654</td>
+      <td>0.155823</td>
+      <td>-0.230918</td>
+      <td>0.043340</td>
+      <td>0.112817</td>
+      <td>0.190806</td>
+      <td>0.099812</td>
+      <td>0.295202</td>
+      <td>0.329927</td>
+      <td>0.693640</td>
+      <td>0.368399</td>
+      <td>-0.075157</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.215169</td>
+      <td>0.026336</td>
+      <td>0.003852</td>
+      <td>0.200490</td>
+      <td>0.398505</td>
+      <td>0.322140</td>
+      <td>0.186001</td>
+      <td>0.072693</td>
+      <td>0.140367</td>
+      <td>-0.474008</td>
+      <td>0.050724</td>
+      <td>0.311021</td>
+      <td>0.327419</td>
+      <td>-0.272669</td>
+      <td>-0.212738</td>
+      <td>-0.183489</td>
+      <td>0.031147</td>
+      <td>0.040531</td>
+      <td>0.059605</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.074485</td>
+      <td>0.020634</td>
+      <td>0.001524</td>
+      <td>0.255601</td>
+      <td>0.017159</td>
+      <td>-0.475741</td>
+      <td>-0.346607</td>
+      <td>0.055174</td>
+      <td>0.479908</td>
+      <td>-0.102586</td>
+      <td>-0.128404</td>
+      <td>-0.082525</td>
+      <td>0.396299</td>
+      <td>-0.039563</td>
+      <td>0.268307</td>
+      <td>-0.083457</td>
+      <td>-0.232207</td>
+      <td>-0.149461</td>
+      <td>0.030387</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-af647230-fbee-4da6-a051-36aef40f44c1')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+        
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+      
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-af647230-fbee-4da6-a051-36aef40f44c1 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-af647230-fbee-4da6-a051-36aef40f44c1');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+  
 </div>
 
 </div>
 
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedImage jp-OutputArea-output ">
-<img src="data:image/png;base64,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"
->
 </div>
 
 </div>
 
 </div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Using the above PCA, one can label a few of the major components.</p>
+<h4 id="First-Principal-Component">First Principal Component<a class="anchor-link" href="#First-Principal-Component">&#182;</a></h4><p>The first principal component has the defining feature of high correlation between APM, Hotkey usage (Assign to Hotkeys and Select Hotkeys), Number of PAC (Perception Action Cycle, ie seeing something and reacting to it) and a strong negative correlation with Action Latency and Gap Between PAC.
+This supports the fact that the usage of hotkeys would make unit micromanagement easier and faster. Priliminary label of this component as unit micromanagement.</p>
+<h4 id="Second-Principal-Component">Second Principal Component<a class="anchor-link" href="#Second-Principal-Component">&#182;</a></h4><p>The most defining features of the second principal component is its correlation of Max Time Stamp (Game Length), ComplexUnitsMade (units that require long time/tech to produce and use) and negative correlation to Unique Units Made, Unique Hotkeys and Map Explored. This is known as "turtling" in the game (remain defensive and create a huge army of high tech units before finally bee-lining to opponent's base)</p>
+<h4 id="Third-Principal-Component">Third Principal Component<a class="anchor-link" href="#Third-Principal-Component">&#182;</a></h4><p>This corresponds to the player preference to spellcasting (usually relatively high tech) units vs normal units</p>
+<h4 id="Forth-Principal-Component">Forth Principal Component<a class="anchor-link" href="#Forth-Principal-Component">&#182;</a></h4><p>Corresponds roughly to aggressiveness: correlation of APM, Select by Hotkeys, Negative correlations of Unique Units Made, Workers Made and Map Explored (could be a timing attack?)</p>
+<h3 id="K-mean">K-mean<a class="anchor-link" href="#K-mean">&#182;</a></h3><p>Playstyles tend to form clusters due to their similarity. Additionally different playstyles have drastically different stats associated with them (ie a Cannon-rush can have very low APM even when executed with high skill whereas with a bio playstyle, high APM is a must for high skill). Hence it would be wise to identify them before the actual model is develped. K means is employed to find these clusters (again with sklearn). <br>
+The elbow method used to determine that 5 clusters would best suit the dataset. Although the "elbow" is not very pronounced.</p>
 
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="n">loss</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">):</span>
+  <span class="n">km</span><span class="o">=</span><span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dfx</span><span class="p">)</span>
+  <span class="n">loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span><span class="n">loss</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -15997,11 +16226,11 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Linear-Regression">Linear Regression<a class="anchor-link" href="#Linear-Regression">&#182;</a></h3><p>We will now perform a linear regression on the characteristics of the matches and using the league as the target. Because leagues are a stand in for skill (and continuous), the use of linear regression is somewhat appropriate however, we do need to round before computing accuracy</p>
+<p>We shall now create the 2nd order interaction terms using sklearn's PolynomialFeatures.</p>
 
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -16009,14 +16238,57 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
 <span class="n">ply</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">interaction_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">X</span><span class="o">=</span><span class="n">ply</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Xpp</span><span class="p">)</span>
-<span class="n">linreg</span><span class="o">=</span><span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Linear-Regression">Linear Regression<a class="anchor-link" href="#Linear-Regression">&#182;</a></h2><p>We are now done wth feature engineering (hurray!) and can now build the model itself.
+We will now perform a linear regression on the characteristics of the matches and using the league as the target. Because leagues are a stand in for skill (and implies order), the use of linear regression is somewhat appropriate however, we do need to round before computing accuracy <br>
+Again we shall use sklearn.<br></p>
+<h3 id="Train-Test-Split">Train Test Split<a class="anchor-link" href="#Train-Test-Split">&#182;</a></h3><p>Hold your horse, we are not ready to train the model on all the data. We want ot be sure that the model works on all of the data, not just the data it trained on (the technical term is overfitting), we will split off 10% of the data that the model is NOT allowed to see, and train with the remaining 90%. <br>
+The 10% is called the test-set, and we will later use it to see how good our model is after training.</p>
+
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="n">y</span><span class="o">=</span><span class="n">dfy</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">x_train</span><span class="p">,</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span><span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># The actual linear regression itself</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="n">linreg</span><span class="o">=</span><span class="n">LinearRegression</span><span class="p">()</span>
 <span class="n">linreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 
@@ -16025,32 +16297,15 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>LinearRegression()</pre>
-</div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Model-Evaluation">Model Evaluation<a class="anchor-link" href="#Model-Evaluation">&#182;</a></h2><p>Let's see how well our model performs. We use the predict function on the training and test sets to get the predicted League index of the players (of course we also need to round it). We will be using the root mean square error to check the accuracy.</p>
 
 </div>
-
 </div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -16071,32 +16326,7 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>0.9835531662763044</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -16107,7 +16337,6 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 <div class=" highlight hl-python"><pre><span></span><span class="c1"># Testing Loss</span>
 <span class="n">y_pred</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">linreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">))</span>
 <span class="n">loss</span><span class="o">=</span><span class="n">y_pred</span><span class="o">-</span><span class="n">y_test</span>
-<span class="kn">import</span> <span class="nn">math</span>
 <span class="n">sqloss</span><span class="o">=</span><span class="n">loss</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sqloss</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
@@ -16117,36 +16346,122 @@ This supports the fact that the usage of hotkeys would make unit micromanagement
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>0.9970014925003393</pre>
-</div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="How-Well-did-we-do?">How Well did we do?<a class="anchor-link" href="#How-Well-did-we-do?">&#182;</a></h4><p>The training and testing root-mean-square errors are similar (so not much overfitting), and they are within 1. This means that our model is performing rather well, considering that league placements in game are fluid, and players may fluctuate between neighboring leagues rather quickly. This means that our predictions are rather accurate!</p>
+<h2 id="Bonus-Cool-Stuff">Bonus Cool Stuff<a class="anchor-link" href="#Bonus-Cool-Stuff">&#182;</a></h2><p>Remember the principal components of that we have? We can use them to label matches in Radar plots for some really cool visuals (you might have seen them in esports). So this is something that you might want to show to your boss/viewers to intrigue them.<br>
+We first grab the PCA-transformed data and ensure that the minimum of each column is 0 (so our graph does not go below 0).</p>
 
 </div>
-
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-python"><pre><span></span><span class="n">Xp</span><span class="o">=</span><span class="n">pcaMod</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dfx</span><span class="p">)</span>
+<span class="n">Xp</span><span class="o">=</span><span class="n">Xp</span><span class="o">-</span><span class="n">Xp</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
 
+     </div>
+</div>
+</div>
 </div>
 
 </div>
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The training and testing root-mean-square errors are similar, and they are within 1. This means that our model is performing rather well, considering that league placements in game are fluid, and players may fluctuate between leagues rather quickly.</p>
+<p>We will now take advantage of the polar plot of matplotlib. We want to graph the first 5 principal components, which are Micro, Turtle, Tech, Aggresiveness and Macro.</p>
+
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-python"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;figure&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">polar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Polar angles</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">/</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.1415926</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">angles</span> <span class="o">+=</span> <span class="n">angles</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_theta_offset</span><span class="p">(</span><span class="mf">3.1415</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_theta_direction</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># Create the labels</span>
+<span class="n">compo</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Micro&#39;</span><span class="p">,</span><span class="s1">&#39;Turtle&#39;</span><span class="p">,</span><span class="s1">&#39;Tech&#39;</span><span class="p">,</span><span class="s1">&#39;Agro&#39;</span><span class="p">,</span><span class="s1">&#39;Macro&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">compo</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">Xp</span><span class="p">[</span><span class="mi">0</span><span class="p">,:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">values</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The first match replay is a very turtle-ly player who has somewhat good micro and medium micro. Not very aggressive nor interested in tech.</p>
+
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-python"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;figure&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">polar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Polar angles</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">/</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.1415926</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">angles</span> <span class="o">+=</span> <span class="n">angles</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_theta_offset</span><span class="p">(</span><span class="mf">3.1415</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_theta_direction</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># Create the labels</span>
+<span class="n">compo</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Micro&#39;</span><span class="p">,</span><span class="s1">&#39;Turtle&#39;</span><span class="p">,</span><span class="s1">&#39;Tech&#39;</span><span class="p">,</span><span class="s1">&#39;Agro&#39;</span><span class="p">,</span><span class="s1">&#39;Macro&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">compo</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">Xp</span><span class="p">[</span><span class="mi">1</span><span class="p">,:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">values</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>So, the second matchup is not very aggressive, quite micro and turtle heavy. Additional matches replays can be generated the same way with different rows of the numpy array.</p>
 
 </div>
 </div>
